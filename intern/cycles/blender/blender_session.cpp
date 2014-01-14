@@ -46,20 +46,14 @@ BlenderSession::BlenderSession(BL::RenderEngine b_engine_, BL::UserPreferences b
 {
 	/* offline render */
 
-	if (b_render) {
-		width = render_resolution_x(b_render);
-		height = render_resolution_y(b_render);
-	}
-	else {
-		width = height = 0.0;
-	}
+	width = render_resolution_x(b_render);
+	height = render_resolution_y(b_render);
 
 	background = true;
 	last_redraw_time = 0.0;
 	start_resize_time = 0.0;
 
-	if (b_render)
-		create_session();
+	create_session();
 }
 
 BlenderSession::BlenderSession(BL::RenderEngine b_engine_, BL::UserPreferences b_userpref_,
@@ -190,16 +184,10 @@ void BlenderSession::reset_session(BL::BlendData b_data_, BL::Scene b_scene_)
 
 void BlenderSession::free_session()
 {
-	try {
-		if (sync)
-			delete sync;
+	if(sync)
+		delete sync;
 
-		delete session;
-	}
-	catch (const std::exception &exc)
-	{
-		printf("Cycles-free session: ERROR: %s\n", exc.what());
-	}
+	delete session;
 }
 
 static PassType get_pass_type(BL::RenderPass b_pass)
