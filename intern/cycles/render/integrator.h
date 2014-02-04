@@ -53,6 +53,7 @@ public:
 	float sample_clamp;
 	bool motion_blur;
 
+	int samples;
 	int aa_samples;
 	int diffuse_samples;
 	int glossy_samples;

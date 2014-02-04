@@ -51,6 +51,7 @@ Integrator::Integrator()
 	sample_clamp = 0.0f;
 	motion_blur = false;
 
+	samples = 1;
 	aa_samples = 0;
 	diffuse_samples = 1;
 	glossy_samples = 1;
@@ -118,6 +119,7 @@ void Integrator::device_update(Device *device, DeviceScene *dscene, Scene *scene
 	kintegrator->sample_clamp = (sample_clamp == 0.0f)? FLT_MAX: sample_clamp*3.0f;
 
 	kintegrator->branched = (method == BRANCHED_PATH);
+	kintegrator->samples = samples;
 	kintegrator->aa_samples = aa_samples;
 	kintegrator->diffuse_samples = diffuse_samples;
 	kintegrator->glossy_samples = glossy_samples;
@@ -191,7 +193,8 @@ bool Integrator::modified(const Integrator& integrator)
 		subsurface_samples == integrator.subsurface_samples &&
 		volume_samples == integrator.volume_samples &&
 		motion_blur == integrator.motion_blur &&
-		sampling_pattern == integrator.sampling_pattern);
+		sampling_pattern == integrator.sampling_pattern &&
+		samples == integrator.samples);
 }
 
 void Integrator::tag_update(Scene *scene)
